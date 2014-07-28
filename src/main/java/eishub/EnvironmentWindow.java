@@ -1,4 +1,4 @@
-package eishub.carriage;
+package eishub;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package eishub.carriage;
+package eishub;
 
 import java.util.Collection;
 import java.util.Map;

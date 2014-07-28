@@ -1,4 +1,4 @@
-package eishub.carriage;
+package eishub;
 
 enum RobotAction { UNKNOWN, PUSH, WAIT };
 
