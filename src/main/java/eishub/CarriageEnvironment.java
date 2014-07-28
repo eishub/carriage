@@ -2,9 +2,9 @@ package eishub;
 
 enum RobotAction { UNKNOWN, PUSH, WAIT };
 
-public class Environment implements Runnable {
+public class CarriageEnvironment implements Runnable {
 
-	private EnvironmentWindow window = new EnvironmentWindow();
+	private CarriageWindow window = new CarriageWindow();
 	
 	private RobotAction robotAction1 = RobotAction.UNKNOWN;
 	private RobotAction robotAction2 = RobotAction.UNKNOWN;
@@ -16,7 +16,7 @@ public class Environment implements Runnable {
 	/**
 	 * 
 	 */
-	public Environment() {
+	public CarriageEnvironment() {
 
 	}
 	

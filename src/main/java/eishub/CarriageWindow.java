@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 @SuppressWarnings("serial")
-public class EnvironmentWindow extends JFrame {
+public class CarriageWindow extends JFrame {
 
 	private BufferedImage carriageImage = null;
 	private BufferedImage dirtImage = null;
@@ -59,7 +59,7 @@ public class EnvironmentWindow extends JFrame {
 	/**
 	 * 
 	 */
-	public EnvironmentWindow() {
+	public CarriageWindow() {
 
 		this.setSize(425, 450);
 		this.setResizable(false);

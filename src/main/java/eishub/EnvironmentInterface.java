@@ -17,7 +17,7 @@ import eis.iilang.Numeral;
 @SuppressWarnings("serial")
 public class EnvironmentInterface extends EIDefaultImpl {
 	
-	private Environment env;
+	private CarriageEnvironment env;
 	private Thread t;
 	
 	/**
@@ -67,7 +67,7 @@ public class EnvironmentInterface extends EIDefaultImpl {
 		this.terminate();
 		
 		// Create environment.
-		env = new Environment();
+		env = new CarriageEnvironment();
 		
 		// Set state to paused.
 		setState(EnvironmentState.PAUSED);

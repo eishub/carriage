@@ -130,7 +130,7 @@ class AlternatingAgent extends Agent {
 	
 }
 
-public class Main {
+public class CarriageCLI {
 
 	public static void main(String[] args) {
 		
