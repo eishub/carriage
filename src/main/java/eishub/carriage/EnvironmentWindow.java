@@ -1,4 +1,4 @@
-package eis.carriage;
+package eishub.carriage;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,27 +12,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+@SuppressWarnings("serial")
 public class EnvironmentWindow extends JFrame {
 
 	private BufferedImage carriageImage = null;
 	private BufferedImage dirtImage = null;
-	private BufferedImage iceImage = null;
 
-	private Graphics2D g2D = null;
-	private JPanel viewPanel = null;
-	
-	private int state=0;
-	
+	private int state = 0;
+
+	/**
+	 *
+	 */
 	class ViewPanel extends JPanel {
 		
 		public ViewPanel() {
-			
 			this.setSize(400, 400);
-			
 		}
 		
 		public void paint(Graphics g) {
-
 			Graphics2D g2d = (Graphics2D) g;
 			
 			g2d.setColor(Color.white);
@@ -56,11 +53,12 @@ public class EnvironmentWindow extends JFrame {
 			g2d.drawImage(carriageImage, transform, null);
 			
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-
 		}
-		
 	}
 	
+	/**
+	 * 
+	 */
 	public EnvironmentWindow() {
 
 		this.setSize(425, 450);
@@ -97,8 +95,6 @@ public class EnvironmentWindow extends JFrame {
 
 		JPanel panel1 = new ViewPanel();
 		JPanel panel2 = new JPanel();
-		viewPanel = panel1;
-		
 		JTabbedPane tabs = new JTabbedPane();
 		tabs.add("View", panel1);
 		tabs.add("Config", panel2);
@@ -107,16 +103,14 @@ public class EnvironmentWindow extends JFrame {
 		this.add(tabs);
 
 		this.setVisible(true);
-
 	}
 	
+	/**
+	 * 
+	 */
 	public void setState(int state){
-		
 		this.state = state;
-		
-		repaint();
-		
+		repaint();	
 	}
-	
 
 }

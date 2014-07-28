@@ -1,7 +1,6 @@
-package eis.carriage;
+package eishub.carriage;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 
 import eis.exceptions.ActException;
@@ -12,24 +11,27 @@ import eis.exceptions.PerceiveException;
 import eis.exceptions.RelationException;
 import eis.iilang.*;
 
+/**
+ *
+ */
 abstract class Agent extends Thread {
 	
 	protected EnvironmentInterface ei = null;
 	protected String id = null;
 	
 	public Agent(EnvironmentInterface ei, String id) {
-		
 		this.ei = ei;
 		this.id = id;
 		
 		this.setPriority(MIN_PRIORITY);
-		
 	}
 	
+	/**
+	 * 
+	 * @param msg
+	 */
 	protected void say(String msg) {
-		
 		System.out.println(id + " says: " + msg);
-		
 	}
 	
 }
@@ -37,20 +39,15 @@ abstract class Agent extends Thread {
 class PushingAgent extends Agent {
 	
 	public PushingAgent(EnvironmentInterface ei, String id) {
-	
 		super(ei,id);
-
 	}
 
 	public void run() {
-		
 		try {
-
 			//ei.performAction(id, new Item("enter"));
 			ei.associateEntity(id, ei.getFreeEntities().getFirst());
 			
 			while(true) {
-			
 				// perceive
 				Map<String, Collection<Percept>> percepts = null;
 				percepts = ei.getAllPercepts(id);
@@ -90,13 +87,10 @@ class AlternatingAgent extends Agent {
 	}
 
 	public void run() {
-		
 		try {
-
 			ei.associateEntity(id, ei.getFreeEntities().getFirst());
 			
-			while(true) {
-				
+			while(true) {	
 				// perceive
 				Map<String, Collection<Percept>> percepts = null;
 				percepts = ei.getAllPercepts(id);
@@ -173,5 +167,4 @@ public class Main {
 		}
 		
 	}
-	
 }
