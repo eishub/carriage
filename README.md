@@ -1,6 +1,6 @@
 # The Carriage Environment
 
-<img src="https://github.com/eishub/carriage/wiki/carriage.png" style="float:right;"/>
+<img align="right" src="https://github.com/eishub/carriage/wiki/carriage.png"/>
 
 The carriage environment consists of a *carriage* and *two robots* that can either *push* the carriage or do nothing, i.e., *wait*. The robots and the carriage are positioned on a ring with only three positions (top, left and right bottom). The robots, moreover, are each located on opposite sides of the carriage and if both push at the same time, the carriage does not move. If one robot pushes and the other robot waits, then the carriage moves one position.
 
