@@ -13,3 +13,8 @@ The actions that a robot can perform are either a **push** or a **wait** action.
 ## Percept
 
 The robots receive a percept of the form **carriagePos(X)** where `X` is either 0, 1, or 2.
+
+
+# Releases
+
+Releases can be found in eishub's maven repository [here](https://github.com/eishub/mvn-repo/tree/master/eishub/carriage).
