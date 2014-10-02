@@ -42,14 +42,8 @@ public class CarriageEnvironment implements Runnable {
 					System.out.println("Waiting (.5s): Robot 1 choose "
 							+ robotAction1 + " and robot 2 choose "
 							+ robotAction2 + ".");
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					Thread.sleep(500);
 				}
-				;
 				System.out.println("Ready: Robot 1 choose " + robotAction1
 						+ " and robot 2 choose " + robotAction2 + ".");
 
