@@ -1,5 +1,7 @@
 package eishub;
 
+import javax.swing.SwingUtilities;
+
 enum RobotAction {
 	UNKNOWN, PUSH, WAIT
 };
@@ -186,7 +188,12 @@ public class CarriageEnvironment implements Runnable {
 	 * 
 	 */
 	public void release() {
-		window.dispose();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				window.dispose();
+			}
+		});
 	}
 
 }

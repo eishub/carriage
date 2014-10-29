@@ -4,7 +4,7 @@
 
 	<groupId>eishub</groupId>
 	<artifactId>carriage</artifactId>
-	<version>0.5.1</version>
+	<version>0.5.2</version>
 	<name>Carriage Environment</name>
 	<description>Carriage environment where two robots can push a carriage on a ring in opposite directions.</description>
 	<url>http://github.com/eishub/carriage/</url>
