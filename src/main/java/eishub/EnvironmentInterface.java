@@ -232,11 +232,4 @@ public class EnvironmentInterface extends EIDefaultImpl {
 				"queryProperty has not been implemented.");
 	}
 
-	/**
-	 * Returns expected version of Environment Interface Standard that is used.
-	 */
-	public String requiredVersion() {
-		return "0.4";
-	}
-
 }
