@@ -12,7 +12,7 @@
 	
 	<groupId>eishub</groupId>
 	<artifactId>${environmentname}</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>${environmentname}</name>
 	<description>${environmentname} 
 
@@ -66,7 +66,7 @@ Environment where two robots can push a carriage on a ring in opposite direction
 		<dependency>
 			<groupId>eishub</groupId>
 			<artifactId>eis</artifactId>
-			<version>0.5.0-SNAPSHOT</version>
+			<version>0.5.0</version>
 		</dependency>
 	</dependencies>
 
