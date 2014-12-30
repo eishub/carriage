@@ -66,7 +66,7 @@ Environment where two robots can push a carriage on a ring in opposite direction
 		<dependency>
 			<groupId>eishub</groupId>
 			<artifactId>eis</artifactId>
-			<version>0.5.0</version>
+			<version>0.5.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
