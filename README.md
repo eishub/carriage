@@ -18,3 +18,22 @@ The robots receive a percept of the form **carriagePos(X)** where `X` is either 
 # Releases
 
 Releases can be found in eishub's maven repository [here](https://github.com/eishub/mvn-repo/tree/master/eishub/carriage).
+
+Dependency information 
+=====================
+
+```
+<repository>
+ <id>eishub-mvn-repo</id>
+ <url>https://raw.github.com/eishub/mvn-repo/master</url>
+</repository>
+```
+	
+```	
+<dependency>
+	<groupId>eishub</groupId>
+	<artifactId>carriage</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+</dependency>
+```
+
