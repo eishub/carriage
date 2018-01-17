@@ -12,7 +12,7 @@
 	
 	<groupId>eishub</groupId>
 	<artifactId>Carriage</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>${environmentname}</name>
 	<description>${environmentname} 
 
@@ -66,7 +66,7 @@ Environment where two robots can push a carriage on a ring in opposite direction
 		<dependency>
 			<groupId>eishub</groupId>
 			<artifactId>eis</artifactId>
-			<version>0.5.0</version>
+			<version>0.6.0</version>
 		</dependency>
 	</dependencies>
 
@@ -178,8 +178,7 @@ Environment where two robots can push a carriage on a ring in opposite direction
 				<configuration>
 					<server>github</server>
 					<!-- git commit message -->
-					<message>Maven artifacts for ${project.name} version
-						${project.version}</message>
+					<message>Maven artifacts for ${project.name} version ${project.version}</message>
 					<!-- matches distribution management repository url above -->
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 					<!-- remote branch name -->
