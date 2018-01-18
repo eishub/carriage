@@ -33,7 +33,7 @@ Dependency information
 <dependency>
 	<groupId>eishub</groupId>
 	<artifactId>Carriage</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1.0</version>
 </dependency>
 ```
 
