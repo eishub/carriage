@@ -15,31 +15,21 @@ import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class CarriageWindow extends JFrame {
-
 	private BufferedImage carriageImage = null;
 	private BufferedImage dirtImage = null;
-
 	private int state = 0;
 
-	/**
-	 *
-	 */
 	class ViewPanel extends JPanel {
-
 		public ViewPanel() {
-			this.setSize(400, 400);
+			setSize(400, 400);
 		}
 
+		@Override
 		public void paint(Graphics g) {
 			Graphics2D g2d = (Graphics2D) g;
-
 			g2d.setColor(Color.white);
 			g2d.fillRect(0, 0, 400, 400);
-
-			// g2d.drawImage(dirtImage, 0, 0, null);
-
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g2d.setStroke(new BasicStroke(4, 0, 0));
 			g2d.setColor(Color.gray);
 			g2d.drawOval(50, 50, 300, 300);
@@ -49,29 +39,22 @@ public class CarriageWindow extends JFrame {
 
 			AffineTransform transform = new AffineTransform();
 			transform.translate(200, 200);
-			transform.rotate(state * 2 * Math.PI / 3 + Math.PI);
+			transform.rotate(CarriageWindow.this.state * 2 * Math.PI / 3 + Math.PI);
 			transform.translate(-25, 125);
 
-			g2d.drawImage(carriageImage, transform, null);
-
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_OFF);
+			g2d.drawImage(CarriageWindow.this.carriageImage, transform, null);
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 		}
 	}
 
-	/**
-	 * 
-	 */
 	public CarriageWindow() {
-
-		this.setSize(425, 450);
-		this.setResizable(false);
+		setSize(425, 450);
+		setResizable(false);
 
 		// carriage image
-		carriageImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2D = (Graphics2D) carriageImage.getGraphics();
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		this.carriageImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2D = (Graphics2D) this.carriageImage.getGraphics();
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2D.setColor(Color.white);
 		g2D.fillRect(0, 0, 50, 50);
 		g2D.setColor(Color.lightGray);
@@ -84,12 +67,11 @@ public class CarriageWindow extends JFrame {
 		g2D.fillOval(40, 20, 10, 10);
 
 		// dirt image
-		dirtImage = new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB);
+		this.dirtImage = new BufferedImage(400, 400, BufferedImage.TYPE_INT_RGB);
 
-		g2D = (Graphics2D) dirtImage.getGraphics();
+		g2D = (Graphics2D) this.dirtImage.getGraphics();
 
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2D.setColor(Color.white);
 		g2D.fillRect(0, 0, 400, 400);
@@ -103,25 +85,22 @@ public class CarriageWindow extends JFrame {
 		JTabbedPane tabs = new JTabbedPane();
 		tabs.add("View", panel1);
 		tabs.add("Config", panel2);
-		// tabs.setSize(500,500);
 
-		this.add(tabs);
-
-		this.setVisible(true);
+		add(tabs);
+		setVisible(true);
 	}
 
 	/**
 	 * this can be called from outside (another thread) to change the state
 	 */
+	@Override
 	public void setState(int state) {
 		this.state = state;
 		SwingUtilities.invokeLater(new Runnable() {
-
 			@Override
 			public void run() {
 				repaint();
 			}
 		});
 	}
-
 }

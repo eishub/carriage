@@ -1,6 +1,7 @@
 package eishub;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import eis.EIDefaultImpl;
@@ -16,7 +17,6 @@ import eis.iilang.Percept;
 
 @SuppressWarnings("serial")
 public class EnvironmentInterface extends EIDefaultImpl {
-
 	private CarriageEnvironment env;
 	private Thread t;
 
@@ -24,13 +24,10 @@ public class EnvironmentInterface extends EIDefaultImpl {
 	 * Empty constructor.
 	 */
 	public EnvironmentInterface() throws ManagementException {
-
 	}
 
 	@Override
-	public void init(Map<String, Parameter> parameters)
-			throws ManagementException {
-
+	public void init(Map<String, Parameter> parameters) throws ManagementException {
 		System.out.println("Initializing carriage environment.");
 		reset(parameters);
 
@@ -45,7 +42,7 @@ public class EnvironmentInterface extends EIDefaultImpl {
 
 	@Override
 	public void kill() throws ManagementException {
-		this.terminate();
+		terminate();
 		setState(EnvironmentState.KILLED);
 	}
 
@@ -53,47 +50,41 @@ public class EnvironmentInterface extends EIDefaultImpl {
 	 * Clean up.
 	 */
 	private void terminate() {
-		if (t != null) {
-			t.interrupt();
+		if (this.t != null) {
+			this.t.interrupt();
 		}
-		if (env != null) {
-			env.release();
-			env = null;
+		if (this.env != null) {
+			this.env.release();
+			this.env = null;
 		}
 	}
 
 	@Override
-	public void reset(Map<String, Parameter> parameters)
-			throws ManagementException {
-		this.terminate();
+	public void reset(Map<String, Parameter> parameters) throws ManagementException {
+		terminate();
 
 		// Create environment.
-		env = new CarriageEnvironment();
+		this.env = new CarriageEnvironment();
 
 		// Set state to paused.
 		setState(EnvironmentState.PAUSED);
 
-		t = new Thread(env);
-		t.start();
+		this.t = new Thread(this.env);
+		this.t.start();
 	}
 
-	/**
-	 * 
-	 */
 	public void run() {
-
 		while (true) {
 			// provide current step counter as percept to all connected agents
-			long step = env.getStepNumber();
+			long step = this.env.getStepNumber();
 			Percept percept = new Percept("step", new Numeral(step));
 
-			for (String entity : this.getEntities()) {
+			for (String entity : getEntities()) {
 				try {
-					this.notifyAgentsViaEntity(percept, entity);
+					notifyAgentsViaEntity(percept, entity);
 				} catch (EnvironmentInterfaceException e) {
 					// Simply discard exception...?
-					System.out.println("Could not send percept "
-							+ percept.toProlog());
+					System.out.println("Could not send percept " + percept.toProlog());
 				}
 			}
 
@@ -111,16 +102,13 @@ public class EnvironmentInterface extends EIDefaultImpl {
 	 * Returns all current percepts.
 	 */
 	@Override
-	public LinkedList<Percept> getAllPerceptsFromEntity(String entity) {
-
-		LinkedList<Percept> ret = new LinkedList<Percept>();
+	public List<Percept> getAllPerceptsFromEntity(String entity) {
+		List<Percept> ret = new LinkedList<>();
 
 		if (entity.equals("robot1")) {
-			ret.add(new Percept("carriagePos", new Numeral(env
-					.getRobotPercepts1())));
+			ret.add(new Percept("carriagePos", new Numeral(this.env.getRobotPercepts1())));
 		} else if (entity.equals("robot2")) {
-			ret.add(new Percept("carriagePos", new Numeral(env
-					.getRobotPercepts2())));
+			ret.add(new Percept("carriagePos", new Numeral(this.env.getRobotPercepts2())));
 		}
 
 		return ret;
@@ -128,49 +116,32 @@ public class EnvironmentInterface extends EIDefaultImpl {
 
 	/**
 	 * Perform push action.
-	 * 
-	 * @param entity
-	 *            Only one of the two entities 'robot1' or 'robot2' can perform
-	 *            a push action.
+	 *
+	 * @param entity Only one of the two entities 'robot1' or 'robot2' can perform a
+	 *               push action.
 	 * @return Always returns percept "success"!?
 	 */
 	public Percept actionpush(String entity) {
-		env.robotAction(entity, RobotAction.PUSH);
-
-		// if (entity.equals("robot1")) {
-		// env.robotPush1();
-		// }
-		// if (entity.equals("robot2")) {
-		// env.robotPush2();
-		// }
+		this.env.robotAction(entity, RobotAction.PUSH);
 
 		return new Percept("success");
 	}
 
 	/**
 	 * Perform wait action.
-	 * 
-	 * @param entity
-	 *            Only one of the two entities 'robot1' or 'robot2' can perform
-	 *            a wait action.
+	 *
+	 * @param entity Only one of the two entities 'robot1' or 'robot2' can perform a
+	 *               wait action.
 	 * @return Always returns percept "success"!?
 	 */
 	public Percept actionwait(String entity) {
-		env.robotAction(entity, RobotAction.WAIT);
-
-		// if (entity.equals("robot1")) {
-		// env.robotWait1();
-		// }
-		// if (entity.equals("robot2")) {
-		// env.robotWait2();
-		// }
+		this.env.robotAction(entity, RobotAction.WAIT);
 
 		return new Percept("success");
 	}
 
 	@Override
 	public boolean isSupportedByEntity(Action action, String entity) {
-
 		if (action.getName().equals("push") && getEntities().contains(entity)) {
 			return true;
 		}
@@ -182,54 +153,45 @@ public class EnvironmentInterface extends EIDefaultImpl {
 
 	@Override
 	public boolean isSupportedByEnvironment(Action action) {
-
 		if (action.getName().equals("push") || action.getName().equals("wait")) {
 			return true;
+		} else {
+			return false;
 		}
-
-		return false;
 	}
 
 	@Override
 	public boolean isSupportedByType(Action action, String type) {
-
 		if (type.equals("robot") && action.getName().equals("push")) {
 			return true;
-		}
-		if (type.equals("robot") && action.getName().equals("wait")) {
+		} else if (type.equals("robot") && action.getName().equals("wait")) {
 			return true;
+		} else {
+			return false;
 		}
-
-		return false;
 	}
 
 	/**
 	 * Performs requested action, if entity can perform it.
 	 */
 	@Override
-	public Percept performEntityAction(String entity, Action action)
-			throws ActException {
-
+	public Percept performEntityAction(String entity, Action action) throws ActException {
 		if (action.getName().equals("wait")) {
 			return actionwait(entity);
 		} else if (action.getName().equals("push")) {
 			return actionpush(entity);
 		} else {
-			throw new AssertionError("action " + action.getName()
-					+ "not recognized");
+			throw new AssertionError("action " + action.getName() + "not recognized");
 		}
 	}
 
 	@Override
 	public String queryEntityProperty(String entity, String property) {
-		throw new UnsupportedOperationException(
-				"queryEntityProperty has not been implemented.");
+		throw new UnsupportedOperationException("queryEntityProperty has not been implemented.");
 	}
 
 	@Override
 	public String queryProperty(String property) {
-		throw new UnsupportedOperationException(
-				"queryProperty has not been implemented.");
+		throw new UnsupportedOperationException("queryProperty has not been implemented.");
 	}
-
 }
