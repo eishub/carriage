@@ -4,18 +4,17 @@ import javax.swing.SwingUtilities;
 
 enum RobotAction {
 	UNKNOWN, PUSH, WAIT
-};
+}
 
 /**
  * Carriage environment runs in its own thread. it is killed with
  * {@link Thread#interrupt()}.
- *
  */
 public class CarriageEnvironment implements Runnable {
-	private CarriageWindow window = new CarriageWindow();
+	private final CarriageWindow window = new CarriageWindow();
 	private RobotAction robotAction1 = RobotAction.UNKNOWN;
 	private RobotAction robotAction2 = RobotAction.UNKNOWN;
-	private Long stepNum = new Long(0);
+	private Long stepNum = 0L;
 	private int carriagePos = 0;
 
 	public CarriageEnvironment() {
@@ -28,12 +27,12 @@ public class CarriageEnvironment implements Runnable {
 				System.out.println(
 						"Step counter: " + this.stepNum + ". Blocking until both robots have performed an action.");
 				while (this.robotAction1 == RobotAction.UNKNOWN || this.robotAction2 == RobotAction.UNKNOWN) {
-					System.out.println("Waiting (.5s): Robot 1 choose " + this.robotAction1 + " and robot 2 choose "
+					System.out.println("Waiting (.5s): Robot 1 chose " + this.robotAction1 + " and robot 2 chose "
 							+ this.robotAction2 + ".");
 					Thread.sleep(500);
 				}
-				System.out.println("Ready: Robot 1 choose " + this.robotAction1 + " and robot 2 choose "
-						+ this.robotAction2 + ".");
+				System.out.println(
+						"Ready: Robot 1 chose " + this.robotAction1 + " and robot 2 chose " + this.robotAction2 + ".");
 
 				if (this.robotAction1 == RobotAction.PUSH && this.robotAction2 == RobotAction.WAIT) {
 					this.carriagePos++;
@@ -55,11 +54,11 @@ public class CarriageEnvironment implements Runnable {
 				this.robotAction2 = RobotAction.UNKNOWN;
 				this.stepNum++;
 
-				// block for 0,5 a second
+				// block for half a second
 				Thread.sleep(500);
 			}
-		} catch (InterruptedException e) {
-			System.out.println("environment was interrupted and killed");
+		} catch (final InterruptedException e) {
+			System.out.println("Environment was interrupted and killed!");
 		}
 	}
 
@@ -67,7 +66,7 @@ public class CarriageEnvironment implements Runnable {
 		return this.carriagePos;
 	}
 
-	synchronized public void robotAction(String entity, RobotAction action) {
+	synchronized public void robotAction(final String entity, final RobotAction action) {
 		if (entity.equals("robot1") && this.robotAction1 == RobotAction.UNKNOWN) {
 			System.out.println("Robot 1 performs " + action);
 			this.robotAction1 = action;
@@ -94,7 +93,7 @@ public class CarriageEnvironment implements Runnable {
 
 	public void robotWait1() {
 		System.out.println("Wait 1");
-		Long currStep = this.stepNum;
+		final Long currStep = this.stepNum;
 		System.out.println("Set action");
 		this.robotAction1 = RobotAction.WAIT;
 		System.out.println("Block");
@@ -105,7 +104,7 @@ public class CarriageEnvironment implements Runnable {
 
 	public void robotWait2() {
 		System.out.println("Wait 2");
-		Long currStep = this.stepNum;
+		final Long currStep = this.stepNum;
 		System.out.println("Set action");
 		this.robotAction2 = RobotAction.WAIT;
 		System.out.println("Block");
@@ -127,11 +126,6 @@ public class CarriageEnvironment implements Runnable {
 	}
 
 	public void release() {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				CarriageEnvironment.this.window.dispose();
-			}
-		});
+		SwingUtilities.invokeLater(() -> CarriageEnvironment.this.window.dispose());
 	}
 }

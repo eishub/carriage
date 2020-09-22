@@ -1,8 +1,8 @@
 package eishub;
 
-import java.util.Collection;
 import java.util.Map;
 
+import eis.PerceptUpdate;
 import eis.exceptions.ActException;
 import eis.exceptions.AgentException;
 import eis.exceptions.ManagementException;
@@ -10,26 +10,24 @@ import eis.exceptions.NoEnvironmentException;
 import eis.exceptions.PerceiveException;
 import eis.exceptions.RelationException;
 import eis.iilang.Action;
-import eis.iilang.Percept;
 
 abstract class Agent extends Thread {
 	protected EnvironmentInterface ei = null;
 	protected String id = null;
 
-	public Agent(EnvironmentInterface ei, String id) {
+	public Agent(final EnvironmentInterface ei, final String id) {
 		this.ei = ei;
 		this.id = id;
 		setPriority(MIN_PRIORITY);
 	}
 
-	protected void say(String msg) {
+	protected void say(final String msg) {
 		System.out.println(this.id + " says: " + msg);
 	}
-
 }
 
 class PushingAgent extends Agent {
-	public PushingAgent(EnvironmentInterface ei, String id) {
+	public PushingAgent(final EnvironmentInterface ei, final String id) {
 		super(ei, id);
 	}
 
@@ -40,8 +38,8 @@ class PushingAgent extends Agent {
 
 			while (true) {
 				// perceive
-				Map<String, Collection<Percept>> percepts = null;
-				percepts = this.ei.getAllPercepts(this.id);
+				Map<String, PerceptUpdate> percepts = null;
+				percepts = this.ei.getPercepts(this.id);
 				say("I believe the carriage is at " + percepts.values());
 
 				// act
@@ -49,7 +47,7 @@ class PushingAgent extends Agent {
 
 				try {
 					Thread.sleep(950);
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -61,7 +59,7 @@ class PushingAgent extends Agent {
 }
 
 class AlternatingAgent extends Agent {
-	public AlternatingAgent(EnvironmentInterface ei, String id) {
+	public AlternatingAgent(final EnvironmentInterface ei, final String id) {
 		super(ei, id);
 	}
 
@@ -72,15 +70,15 @@ class AlternatingAgent extends Agent {
 
 			while (true) {
 				// perceive
-				Map<String, Collection<Percept>> percepts = null;
-				percepts = this.ei.getAllPercepts(this.id);
+				Map<String, PerceptUpdate> percepts = null;
+				percepts = this.ei.getPercepts(this.id);
 				say("I believe the carriage is at " + percepts.values());
 
 				// act
 				this.ei.performAction(this.id, new Action("push"));
 
 				// perceive
-				percepts = this.ei.getAllPercepts(this.id);
+				percepts = this.ei.getPercepts(this.id);
 				say("I believe the carriage is at " + percepts.values());
 
 				// act
@@ -88,7 +86,7 @@ class AlternatingAgent extends Agent {
 
 				try {
 					Thread.sleep(950);
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
@@ -99,10 +97,10 @@ class AlternatingAgent extends Agent {
 }
 
 public class CarriageCLI {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		try {
 			// loading the environment
-			EnvironmentInterface ei = new EnvironmentInterface();
+			final EnvironmentInterface ei = new EnvironmentInterface();
 			if (ei.isStartSupported()) {
 				ei.start();
 			}
@@ -110,8 +108,8 @@ public class CarriageCLI {
 			Thread.sleep(1000);
 
 			// creating two agents
-			Agent ag1 = new PushingAgent(ei, "ag1");
-			Agent ag2 = new AlternatingAgent(ei, "ag2");
+			final Agent ag1 = new PushingAgent(ei, "ag1");
+			final Agent ag2 = new AlternatingAgent(ei, "ag2");
 
 			// registering agents
 			ei.registerAgent("ag1");
